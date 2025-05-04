@@ -11,8 +11,8 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PositionCreationRequest {
-    @NotBlank
-    @Size(max = 100)
+    @NotBlank(message = "Title not valid")
+    @Size(max = 100, message = "Title must be shorter than 100 characters")
     String title;
     String description;
 }

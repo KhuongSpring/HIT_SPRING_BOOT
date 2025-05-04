@@ -4,12 +4,14 @@ import com.example.baitapquanlynhansu.dtos.requests.department.DepartmentCreatio
 import com.example.baitapquanlynhansu.dtos.requests.department.DepartmentUpdationRequest;
 import com.example.baitapquanlynhansu.dtos.responses.DepartmentResponse;
 import com.example.baitapquanlynhansu.entities.Department;
+import com.example.baitapquanlynhansu.exceptions.CustomException;
 import com.example.baitapquanlynhansu.repositories.DepartmentRepository;
 import com.example.baitapquanlynhansu.services.DepartmentService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,7 +26,11 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public DepartmentResponse createDepartment(DepartmentCreationRequest request) {
-        return null;
+        if (departmentRepository.existsByName(request.getName()))
+            throw new CustomException("Name existed", HttpStatus.CONFLICT);
+        Department department = modelMapper.map(request, Department.class);
+        departmentRepository.save(department);
+        return modelMapper.map(department, DepartmentResponse.class);
     }
 
     @Override
@@ -39,11 +45,24 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public DepartmentResponse updateDepartment(DepartmentUpdationRequest request) {
-        return null;
+        Department oldDepartment = departmentRepository.findById(request.getId())
+                .orElseThrow(() -> new CustomException("Department not found", HttpStatus.BAD_REQUEST));
+        if (departmentRepository.existsByName(request.getName()) && !oldDepartment.getName().equals(request.getName()))
+            throw new CustomException("Name existed", HttpStatus.CONFLICT);
+
+        oldDepartment.setName(request.getName());
+        oldDepartment.setDescription(request.getDescription());
+        departmentRepository.save(oldDepartment);
+        return modelMapper.map(oldDepartment, DepartmentResponse.class);
     }
+
 
     @Override
     public boolean deleteDepartment(Long id) {
+        if (departmentRepository.existsById(id)){
+            departmentRepository.deleteById(id);
+            return true;
+        }
         return false;
     }
 }

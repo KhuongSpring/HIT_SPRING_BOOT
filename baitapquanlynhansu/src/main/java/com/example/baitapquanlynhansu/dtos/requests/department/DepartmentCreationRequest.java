@@ -11,8 +11,8 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class DepartmentCreationRequest {
-    @NotBlank
-    @Size(max = 100)
+    @NotBlank(message = "Name not valid")
+    @Size(max = 100, message = "Name must be shorter than 100 characters")
     String name;
     String description;
 }

@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse updateUser(UserUpdationRequest request) {
         User oldUser = userRepository.findById(request.getId())
-                .orElseThrow(() -> new CustomException("User not found", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new CustomException("User not found", HttpStatus.BAD_REQUEST));
         if (userRepository.existsByUsername(request.getUsername()) && !oldUser.getUsername().equals(request.getUsername()))
             throw new CustomException("Username existed!", HttpStatus.CONFLICT);
         if (userRepository.existsByEmail(request.getEmail()) && !oldUser.getEmail().equals(request.getEmail()))
