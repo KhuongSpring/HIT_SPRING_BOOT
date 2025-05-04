@@ -1,9 +1,9 @@
 package com.example.baitapquanlynhansu.services;
 
 import com.example.baitapquanlynhansu.dtos.requests.employee.EmployeeCreationRequest;
+import com.example.baitapquanlynhansu.dtos.requests.employee.EmployeeGetInfomationRequest;
 import com.example.baitapquanlynhansu.dtos.requests.employee.EmployeeUpdationRequest;
 import com.example.baitapquanlynhansu.dtos.responses.EmployeeResponse;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -15,4 +15,6 @@ public interface EmployeeService {
     EmployeeResponse updateEmployee(EmployeeUpdationRequest request);
 
     boolean deleteEmployee(Long id);
+
+    List<EmployeeResponse> getEmployee(EmployeeGetInfomationRequest request);
 }

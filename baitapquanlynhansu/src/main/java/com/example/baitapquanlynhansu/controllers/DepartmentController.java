@@ -2,11 +2,8 @@ package com.example.baitapquanlynhansu.controllers;
 
 import com.example.baitapquanlynhansu.dtos.requests.department.DepartmentCreationRequest;
 import com.example.baitapquanlynhansu.dtos.requests.department.DepartmentUpdationRequest;
-import com.example.baitapquanlynhansu.dtos.requests.user.UserCreationRequest;
-import com.example.baitapquanlynhansu.dtos.requests.user.UserUpdationRequest;
 import com.example.baitapquanlynhansu.dtos.responses.ApiResponse;
 import com.example.baitapquanlynhansu.dtos.responses.DepartmentResponse;
-import com.example.baitapquanlynhansu.dtos.responses.UserResponse;
 import com.example.baitapquanlynhansu.exceptions.CustomException;
 import com.example.baitapquanlynhansu.services.DepartmentService;
 import jakarta.validation.Valid;

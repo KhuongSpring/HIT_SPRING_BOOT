@@ -1,11 +1,8 @@
 package com.example.baitapquanlynhansu.controllers;
 
-import com.example.baitapquanlynhansu.dtos.requests.department.DepartmentCreationRequest;
-import com.example.baitapquanlynhansu.dtos.requests.department.DepartmentUpdationRequest;
 import com.example.baitapquanlynhansu.dtos.requests.position.PositionCreationRequest;
 import com.example.baitapquanlynhansu.dtos.requests.position.PositionUpdationRequest;
 import com.example.baitapquanlynhansu.dtos.responses.ApiResponse;
-import com.example.baitapquanlynhansu.dtos.responses.DepartmentResponse;
 import com.example.baitapquanlynhansu.dtos.responses.PositionResponse;
 import com.example.baitapquanlynhansu.exceptions.CustomException;
 import com.example.baitapquanlynhansu.services.PositionService;
