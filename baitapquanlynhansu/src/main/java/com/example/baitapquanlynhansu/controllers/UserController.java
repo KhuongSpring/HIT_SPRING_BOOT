@@ -1,6 +1,7 @@
 package com.example.baitapquanlynhansu.controllers;
 
 import com.example.baitapquanlynhansu.dtos.requests.user.UserCreationRequest;
+import com.example.baitapquanlynhansu.dtos.requests.user.UserUpdationRequest;
 import com.example.baitapquanlynhansu.dtos.responses.ApiResponse;
 import com.example.baitapquanlynhansu.dtos.responses.UserResponse;
 import com.example.baitapquanlynhansu.exceptions.CustomException;
@@ -37,6 +38,15 @@ public class UserController {
                 .status(HttpStatus.CREATED)
                 .result(userService.createUser(request))
                 .message("Create success")
+                .build());
+    }
+
+    @PutMapping
+    public ResponseEntity<ApiResponse<UserResponse>> updateUser(@Valid @RequestBody UserUpdationRequest request){
+        return ResponseEntity.ok(ApiResponse.<UserResponse>builder()
+                        .status(HttpStatus.OK)
+                        .message("Update success")
+                        .result(userService.updateUser(request))
                 .build());
     }
 

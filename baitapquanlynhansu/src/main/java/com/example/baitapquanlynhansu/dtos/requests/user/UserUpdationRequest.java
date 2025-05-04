@@ -2,6 +2,7 @@ package com.example.baitapquanlynhansu.dtos.requests.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -12,12 +13,14 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserUpdationRequest {
-    @NotBlank
-    @Size(max = 50)
+    @NotNull
+    Long id;
+    @NotBlank(message = "Username not valid")
+    @Size(max = 50, message = "Username must be shorter than 50 characters")
     String username;
-    @NotBlank
-    @Size(max = 255)
+    @NotBlank(message = "Password not valid")
+    @Size(max = 255, message = "Password must be shorter than 255 characters")
     String password;
-    @Email
+    @Email(message = "Email not valid")
     String email;
 }

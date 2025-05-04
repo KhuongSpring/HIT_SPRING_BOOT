@@ -55,7 +55,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse updateUser(UserUpdationRequest request) {
-        return null;
+        User oldUser = userRepository.findById(request.getId())
+                .orElseThrow(() -> new CustomException("User not found", HttpStatus.NOT_FOUND));
+        if (userRepository.existsByUsername(request.getUsername()) && !oldUser.getUsername().equals(request.getUsername()))
+            throw new CustomException("Username existed!", HttpStatus.CONFLICT);
+        if (userRepository.existsByEmail(request.getEmail()) && !oldUser.getEmail().equals(request.getEmail()))
+            throw new CustomException("Email existed!", HttpStatus.CONFLICT);
+        oldUser.setUsername(request.getUsername());
+        oldUser.setPassword(request.getPassword());
+        oldUser.setEmail(request.getEmail());
+        userRepository.save(oldUser);
+        return modelMapper.map(oldUser, UserResponse.class);
     }
 
     @Override
