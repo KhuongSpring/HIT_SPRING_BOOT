@@ -1,5 +1,6 @@
 package com.example.baitapquanlynhansu.services.impls;
 
+import com.example.baitapquanlynhansu.constants.ErrMessage;
 import com.example.baitapquanlynhansu.dtos.requests.user.UserCreationRequest;
 import com.example.baitapquanlynhansu.dtos.requests.user.UserUpdationRequest;
 import com.example.baitapquanlynhansu.dtos.responses.UserResponse;
@@ -30,9 +31,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse createUser(UserCreationRequest request) {
         if (userRepository.existsByUsername(request.getUsername()))
-            throw new CustomException("Username existed!", HttpStatus.CONFLICT);
+            throw new CustomException(ErrMessage.User.ERR_EXISTED_USERNAME, HttpStatus.CONFLICT);
         if (userRepository.existsByEmail(request.getEmail()))
-            throw new CustomException("Email existed!", HttpStatus.CONFLICT);
+            throw new CustomException(ErrMessage.User.ERR_EXISTED_EMAIL, HttpStatus.CONFLICT);
 
         User user = modelMapper.map(request, User.class);
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
@@ -56,11 +57,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse updateUser(UserUpdationRequest request) {
         User oldUser = userRepository.findById(request.getId())
-                .orElseThrow(() -> new CustomException("User not found", HttpStatus.BAD_REQUEST));
+                .orElseThrow(() -> new CustomException(ErrMessage.User.ERR_NOT_FOUND_USER, HttpStatus.BAD_REQUEST));
         if (userRepository.existsByUsername(request.getUsername()) && !oldUser.getUsername().equals(request.getUsername()))
-            throw new CustomException("Username existed!", HttpStatus.CONFLICT);
+            throw new CustomException(ErrMessage.User.ERR_EXISTED_USERNAME, HttpStatus.CONFLICT);
         if (userRepository.existsByEmail(request.getEmail()) && !oldUser.getEmail().equals(request.getEmail()))
-            throw new CustomException("Email existed!", HttpStatus.CONFLICT);
+            throw new CustomException(ErrMessage.User.ERR_EXISTED_EMAIL, HttpStatus.CONFLICT);
         oldUser.setUsername(request.getUsername());
         oldUser.setPassword(request.getPassword());
         oldUser.setEmail(request.getEmail());
